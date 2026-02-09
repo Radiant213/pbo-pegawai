@@ -1,9 +1,13 @@
 com\mycompany\projekpbo\Koneksi.class
 com\mycompany\projekpbo\FormMenu$1.class
 com\mycompany\projekpbo\FormMenu.class
-com\mycompany\projekpbo\FormLogin.class
 com\mycompany\projekpbo\FormMenu$2.class
-com\mycompany\projekpbo\FormPegawai.class
 com\mycompany\projekpbo\FormDivisi.class
-com\mycompany\projekpbo\FormJabatan.class
 com\mycompany\projekpbo\Projekpbo.class
+com\mycompany\projekpbo\FormMenu$4.class
+com\mycompany\projekpbo\FormMenu$3.class
+com\mycompany\projekpbo\FormLogin.class
+com\mycompany\projekpbo\FormMenu$5.class
+com\mycompany\projekpbo\FormPegawai.class
+com\mycompany\projekpbo\FormDivisi$1.class
+com\mycompany\projekpbo\FormJabatan.class

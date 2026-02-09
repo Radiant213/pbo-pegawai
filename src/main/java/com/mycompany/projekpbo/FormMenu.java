@@ -147,6 +147,7 @@ public class FormMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         FormDivisi formDivisi = new FormDivisi();
         formDivisi.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMenuDivisiMouseClicked
 
     private void btnMenuDivisiCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuDivisiCloseMouseClicked
