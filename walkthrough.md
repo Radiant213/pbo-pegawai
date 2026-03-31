@@ -88,7 +88,7 @@ erDiagram
 public class Koneksi {
     public static String URL = "jdbc:mysql://localhost:3306/db_pegawai";
     public static String USER = "root";
-    public static String PW = "Radiant020409";
+    public static String PW = "";
     
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PW);
