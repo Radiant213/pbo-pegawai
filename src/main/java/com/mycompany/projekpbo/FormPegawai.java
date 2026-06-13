@@ -69,9 +69,9 @@ public class FormPegawai extends javax.swing.JFrame {
         if (cbDivisi.getItemCount() > 0) cbDivisi.setSelectedIndex(0);
         if (cbJabatan.getItemCount() > 0) cbJabatan.setSelectedIndex(0);
         
-        // NIP Pegawai itu manual input (bukan Auto Increment), jadi harus di-enable pas tambah baru
-        txtNIP.setEditable(true);
-        txtNIP.requestFocus();
+        // NIP Pegawai otomatis nambah sendiri dari Auto Increment database
+        txtNIP.setEditable(false);
+        txtNama.requestFocus();
     }
     
     private void tampilData() {
@@ -303,26 +303,23 @@ public class FormPegawai extends javax.swing.JFrame {
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
         try {
-            String sql = "INSERT INTO pegawai (id_pegawai, id_divisi, id_jabatan, nama, alamat, usia) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO pegawai (id_divisi, id_jabatan, nama, alamat, usia) VALUES (?,?,?,?,?)";
             
             java.sql.Connection conn = Koneksi.getConnection();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             
-            // 1. Ambil NIP
-            pst.setString(1, txtNIP.getText());
-            
-            // 2. Ambil ID Divisi Tersembunyi dari ComboBox
+            // 1. Ambil ID Divisi Tersembunyi dari ComboBox
             ItemCombo divisi = (ItemCombo) cbDivisi.getSelectedItem();
-            pst.setString(2, divisi.getKey()); // Masukin ID (misal "1") bukan Nama
+            pst.setString(1, divisi.getKey()); // Masukin ID (misal "1") bukan Nama
             
-            // 3. Ambil ID Jabatan Tersembunyi
+            // 2. Ambil ID Jabatan Tersembunyi
             ItemCombo jabatan = (ItemCombo) cbJabatan.getSelectedItem();
-            pst.setString(3, jabatan.getKey());
+            pst.setString(2, jabatan.getKey());
             
-            // 4. Sisa data text biasa
-            pst.setString(4, txtNama.getText());
-            pst.setString(5, txtAlamat.getText());
-            pst.setString(6, txtUsia.getText());
+            // 3. Sisa data text biasa
+            pst.setString(3, txtNama.getText());
+            pst.setString(4, txtAlamat.getText());
+            pst.setString(5, txtUsia.getText());
             
             pst.execute();
             
