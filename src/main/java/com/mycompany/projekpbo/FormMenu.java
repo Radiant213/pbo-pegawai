@@ -18,6 +18,8 @@ public class FormMenu extends javax.swing.JFrame {
     public FormMenu() {
         initComponents();
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,8 +44,13 @@ public class FormMenu extends javax.swing.JFrame {
         btnMenuPegawaiClose = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(236, 253, 245));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(6, 95, 70));
         jLabel1.setText("Copyright @2026");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -51,21 +58,22 @@ public class FormMenu extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(219, 219, 219)
+                .addGap(218, 218, 218)
                 .addComponent(jLabel1)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(378, Short.MAX_VALUE)
+                .addContainerGap(376, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26))
+                .addGap(28, 28, 28))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 550, 420));
 
         MenuDivisi.setText("== Divisi ==");
+        MenuDivisi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         MenuDivisi.addActionListener(this::MenuDivisiActionPerformed);
 
         btnMenuDivisi.setText("Form Divisi");
@@ -89,6 +97,7 @@ public class FormMenu extends javax.swing.JFrame {
         jMenuBar1.add(MenuDivisi);
 
         MenuJabatan.setText("== Jabatan ==");
+        MenuJabatan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         btnMenuJabatan.setText("Form Jabatan");
         btnMenuJabatan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -109,6 +118,7 @@ public class FormMenu extends javax.swing.JFrame {
         jMenuBar1.add(MenuJabatan);
 
         MenuPegawai.setText("== Pegawai ==");
+        MenuPegawai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         btnMenuPegawai.setText("Form Pegawai");
         btnMenuPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,6 +141,7 @@ public class FormMenu extends javax.swing.JFrame {
         setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuDivisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDivisiActionPerformed

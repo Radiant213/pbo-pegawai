@@ -16,6 +16,8 @@ public class FormDivisi extends javax.swing.JFrame {
         kosong();
     }
     
+
+    
     private void kosong() {
         txtIdDivisi.setText("");
         txtNamaDivisi.setText("");
@@ -72,27 +74,45 @@ public class FormDivisi extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(254, 243, 199));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(120, 53, 15));
         jLabel2.setText("ID DIVISI");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(120, 53, 15));
         jLabel3.setText("NAMA DIVISI");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(120, 53, 15));
         jLabel4.setText("HONOR DIVISI");
 
         txtIdDivisi.addActionListener(this::txtIdDivisiActionPerformed);
 
+        btnTambah.setBackground(new java.awt.Color(217, 119, 6));
+        btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("TAMBAH");
         btnTambah.addActionListener(this::btnTambahActionPerformed);
 
+        btnUpdate.setBackground(new java.awt.Color(217, 119, 6));
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("UPDATE");
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
 
+        btnHapus.setBackground(new java.awt.Color(217, 119, 6));
+        btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("HAPUS");
         btnHapus.addActionListener(this::btnHapusActionPerformed);
 
+        btnKeluar.setBackground(new java.awt.Color(220, 38, 38));
+        btnKeluar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnKeluar.setForeground(new java.awt.Color(255, 255, 255));
         btnKeluar.setText("KELUAR");
         btnKeluar.addActionListener(this::btnKeluarActionPerformed);
 
@@ -119,31 +139,32 @@ public class FormDivisi extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTambah)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnUpdate)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnHapus)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnKeluar))
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnTambah)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnUpdate)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnHapus)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnKeluar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(84, 84, 84)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtHonorDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNamaDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIdDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(84, 84, 84)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtHonorDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNamaDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIdDivisi, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,9 +188,9 @@ public class FormDivisi extends javax.swing.JFrame {
                     .addComponent(btnUpdate)
                     .addComponent(btnHapus)
                     .addComponent(btnKeluar))
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         jMenu1.setText("Form Divisi");
@@ -193,6 +214,7 @@ public class FormDivisi extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtIdDivisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdDivisiActionPerformed
