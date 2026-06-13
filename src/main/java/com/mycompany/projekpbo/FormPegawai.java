@@ -13,6 +13,9 @@ import javax.swing.DefaultComboBoxModel;
 public class FormPegawai extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormPegawai.class.getName());
+    
+    // Variabel untuk nyimpen ID aslinya (auto increment) pas baris tabel diklik
+    private String selectedIdPegawai = "";
 
     public FormPegawai() {
         initComponents();
@@ -69,19 +72,21 @@ public class FormPegawai extends javax.swing.JFrame {
         if (cbDivisi.getItemCount() > 0) cbDivisi.setSelectedIndex(0);
         if (cbJabatan.getItemCount() > 0) cbJabatan.setSelectedIndex(0);
         
-        // NIP Pegawai otomatis nambah sendiri dari Auto Increment database
-        txtNIP.setEditable(false);
-        txtNama.requestFocus();
+        // NIP Pegawai manual input
+        txtNIP.setEditable(true);
+        txtNIP.requestFocus();
+        selectedIdPegawai = "";
     }
     
     private void tampilData() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("NIP");         // Index 0 (id_pegawai)
-        model.addColumn("NAMA");        // Index 1
-        model.addColumn("DIVISI");      // Index 2 (nama_divisi)
-        model.addColumn("JABATAN");     // Index 3 (jabatan)
-        model.addColumn("ALAMAT");      // Index 4
-        model.addColumn("USIA");        // Index 5
+        model.addColumn("ID PEGAWAI");  // Index 0 (id_pegawai)
+        model.addColumn("NIP");         // Index 1 (nip)
+        model.addColumn("NAMA");        // Index 2
+        model.addColumn("DIVISI");      // Index 3 (nama_divisi)
+        model.addColumn("JABATAN");     // Index 4 (jabatan)
+        model.addColumn("ALAMAT");      // Index 5
+        model.addColumn("USIA");        // Index 6
 
         try {
             // Kita pake JOIN biar yang muncul NAMA Divisi, bukan ID-nya
@@ -96,12 +101,13 @@ public class FormPegawai extends javax.swing.JFrame {
 
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    rs.getString("id_pegawai"),   // NIP
+                    rs.getString("id_pegawai"),   // ID Database
+                    rs.getString("nip"),          // NIP Manual
                     rs.getString("nama"),         // Nama
-                    rs.getString("nama_divisi"),  // Nama Divisi (Hasil Join)
-                    rs.getString("jabatan"),      // Nama Jabatan (Hasil Join)
-                    rs.getString("alamat"),
-                    rs.getString("usia")
+                    rs.getString("nama_divisi"),  // Nama Divisi dari tabel Divisi
+                    rs.getString("jabatan"),      // Nama Jabatan dari tabel Jabatan
+                    rs.getString("alamat"),       // Alamat
+                    rs.getString("usia")          // Usia
                 });
             }
             tablePegawai.setModel(model);
@@ -303,23 +309,25 @@ public class FormPegawai extends javax.swing.JFrame {
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
         try {
-            String sql = "INSERT INTO pegawai (id_divisi, id_jabatan, nama, alamat, usia) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO pegawai (nip, id_divisi, id_jabatan, nama, alamat, usia) VALUES (?,?,?,?,?,?)";
             
             java.sql.Connection conn = Koneksi.getConnection();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             
-            // 1. Ambil ID Divisi Tersembunyi dari ComboBox
+            pst.setString(1, txtNIP.getText());
+            
+            // Ambil ID Divisi Tersembunyi dari ComboBox
             ItemCombo divisi = (ItemCombo) cbDivisi.getSelectedItem();
-            pst.setString(1, divisi.getKey()); // Masukin ID (misal "1") bukan Nama
+            pst.setString(2, divisi.getKey()); // Masukin ID (misal "1") bukan Nama
             
-            // 2. Ambil ID Jabatan Tersembunyi
+            // Ambil ID Jabatan Tersembunyi
             ItemCombo jabatan = (ItemCombo) cbJabatan.getSelectedItem();
-            pst.setString(2, jabatan.getKey());
+            pst.setString(3, jabatan.getKey());
             
-            // 3. Sisa data text biasa
-            pst.setString(3, txtNama.getText());
-            pst.setString(4, txtAlamat.getText());
-            pst.setString(5, txtUsia.getText());
+            // Sisa data text biasa
+            pst.setString(4, txtNama.getText());
+            pst.setString(5, txtAlamat.getText());
+            pst.setString(6, txtUsia.getText());
             
             pst.execute();
             
@@ -334,18 +342,18 @@ public class FormPegawai extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-        if (txtNIP.getText().equals("")) {
+        if (selectedIdPegawai.equals("")) {
              JOptionPane.showMessageDialog(this, "Pilih data dulu bang!");
              return;
         }
         
-        int tanya = JOptionPane.showConfirmDialog(null, "Yakin hapus pegawai ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (tanya == JOptionPane.YES_OPTION) {
+        int confirm = JOptionPane.showConfirmDialog(this, "Yakin mau hapus pegawai ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
             try {
                 String sql = "DELETE FROM pegawai WHERE id_pegawai=?";
                 java.sql.Connection conn = Koneksi.getConnection();
                 java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, txtNIP.getText());
+                pst.setString(1, selectedIdPegawai);
                 pst.execute();
                 
                 JOptionPane.showMessageDialog(null, "Berhasil Hapus!");
@@ -369,27 +377,29 @@ public class FormPegawai extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        if (txtNIP.getText().equals("")) {
+        if (selectedIdPegawai.equals("")) {
              JOptionPane.showMessageDialog(this, "Pilih data dulu bang!");
              return;
         }
         
         try {
-            String sql = "UPDATE pegawai SET id_divisi=?, id_jabatan=?, nama=?, alamat=?, usia=? WHERE id_pegawai=?";
+            String sql = "UPDATE pegawai SET nip=?, id_divisi=?, id_jabatan=?, nama=?, alamat=?, usia=? WHERE id_pegawai=?";
             java.sql.Connection conn = Koneksi.getConnection();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             
+            pst.setString(1, txtNIP.getText());
+            
             // Ambil ID dari Combo
             ItemCombo divisi = (ItemCombo) cbDivisi.getSelectedItem();
-            pst.setString(1, divisi.getKey());
+            pst.setString(2, divisi.getKey());
             
             ItemCombo jabatan = (ItemCombo) cbJabatan.getSelectedItem();
-            pst.setString(2, jabatan.getKey());
+            pst.setString(3, jabatan.getKey());
             
-            pst.setString(3, txtNama.getText());
-            pst.setString(4, txtAlamat.getText());
-            pst.setString(5, txtUsia.getText());
-            pst.setString(6, txtNIP.getText()); // Where Clause
+            pst.setString(4, txtNama.getText());
+            pst.setString(5, txtAlamat.getText());
+            pst.setString(6, txtUsia.getText());
+            pst.setString(7, selectedIdPegawai); // Where Clause
             
             pst.execute();
             JOptionPane.showMessageDialog(null, "Data Berhasil Diupdate!");
@@ -406,14 +416,15 @@ public class FormPegawai extends javax.swing.JFrame {
         int baris = tablePegawai.getSelectedRow();
         
         if (baris != -1) {
-            txtNIP.setText(tablePegawai.getValueAt(baris, 0).toString());
-            txtNama.setText(tablePegawai.getValueAt(baris, 1).toString());
+            selectedIdPegawai = tablePegawai.getValueAt(baris, 0).toString();
+            txtNIP.setText(tablePegawai.getValueAt(baris, 1).toString());
+            txtNama.setText(tablePegawai.getValueAt(baris, 2).toString());
             
-            String namaDivisiTabel = tablePegawai.getValueAt(baris, 2).toString();
-            String namaJabatanTabel = tablePegawai.getValueAt(baris, 3).toString();
+            String namaDivisiTabel = tablePegawai.getValueAt(baris, 3).toString();
+            String namaJabatanTabel = tablePegawai.getValueAt(baris, 4).toString();
             
-            txtAlamat.setText(tablePegawai.getValueAt(baris, 4).toString());
-            txtUsia.setText(tablePegawai.getValueAt(baris, 5).toString());
+            txtAlamat.setText(tablePegawai.getValueAt(baris, 5).toString());
+            txtUsia.setText(tablePegawai.getValueAt(baris, 6).toString());
             
             txtNIP.setEditable(false); // NIP gak boleh diedit pas update
             
